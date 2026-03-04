@@ -15,10 +15,10 @@ export default function Hero() {
         Digital Services & Quality Products in One Place
       </p>
       <button className="bg-orange-500 px-6 py-2 rounded mr-3">
-        Get Service
+        <a href="/services">Get Service</a>
       </button>
       <button className="bg-white text-blue-600 px-6 py-2 rounded">
-        Shop Now
+        <a href="/shop">Shop Now</a>
       </button>
     </motion.section>
   );
