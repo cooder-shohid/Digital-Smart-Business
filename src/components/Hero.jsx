@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 export default function Hero() {
   return (
@@ -15,10 +16,10 @@ export default function Hero() {
         Digital Services & Quality Products in One Place
       </p>
       <button className="bg-orange-500 px-6 py-2 rounded mr-3">
-        <a href="/services">Get Service</a>
+        <Link to="/services">Get Service</Link>
       </button>
       <button className="bg-white text-blue-600 px-6 py-2 rounded">
-        <a href="/shop">Shop Now</a>
+        <Link to="/shop">Shop Now</Link>
       </button>
     </motion.section>
   );
