@@ -1,221 +1,8 @@
 import { useState, useContext, useMemo } from "react";
 import { CartContext } from "../context/CartContext";
 import { FaStar, FaHeart, FaCartPlus, FaCheckCircle } from "react-icons/fa";
-import img1 from "../assets/Wireless Earbuds.avif";
-import img2 from "../assets/Leather Wallet.avif";
-import img3 from "../assets/Smart Watch.avif";
-import img4 from "../assets/Gaming Mouse.avif";
-import img5 from "../assets/Bluetooth Speaker.avif";
-import img6 from "../assets/Fitness Tracker.avif";
-import img7 from "../assets/USB-C Charger.avif";
-import img8 from "../assets/Noise Cancelling Headphones.avif";
-import img9 from "../assets/Portable SSD 1TB.avif";
-import img10 from "../assets/Mechanical Keyboard.avif";
-import img11 from "../assets/istockphoto-2240604877-1024x1024.jpg";
-import img12 from "../assets/Wireless Mouse.avif";
-// import img13 from "../assets/Phone Stand.avif";
-// import img14 from "../assets/Screen Protector Set.avif";
-// import img15 from "../assets/Cable Organizer Kit.avif";
-
+import {productsData} from "../data/productsData";
 // sample product list
-const productsData = [
-  {
-    id: 1,
-    name: "Wireless Earbuds",
-    price: 1200,
-    discount: 0,
-    rating: 4.5,
-    image: img1,
-    category: "Electronics",
-    brand: "SoundMagic",
-    tags: ["audio", "wireless"],
-    isNew: false,
-    isOnSale: true,
-  },
-  {
-    id: 2,
-    name: "Leather Wallet",
-    price: 850,
-    discount: 50,
-    rating: 4.0,
-    image: img2,
-    category: "Accessories",
-    brand: "UrbanCraft",
-    tags: ["fashion"],
-    isNew: true,
-    isOnSale: false,
-  },
-  {
-    id: 3,
-    name: "Smart Watch",
-    price: 1800,
-    discount: 200,
-    rating: 4.7,
-    image: img3,
-    category: "Wearables",
-    brand: "TimeTech",
-    tags: ["gadgets"],
-    isNew: false,
-    isOnSale: true,
-  },
-  {
-    id: 4,
-    name: "Gaming Mouse",
-    price: 650,
-    discount: 0,
-    rating: 4.3,
-    image: img4,
-    category: "Electronics",
-    brand: "ProGamer",
-    tags: ["gaming"],
-    isNew: true,
-    isOnSale: false,
-  },
-  {
-    id: 5,
-    name: "Bluetooth Speaker",
-    price: 2200,
-    discount: 300,
-    rating: 4.6,
-    image: img5,
-    category: "Electronics",
-    brand: "SoundBlast",
-    tags: ["audio"],
-    isNew: false,
-    isOnSale: true,
-  },
-  {
-    id: 6,
-    name: "Fitness Tracker",
-    price: 1500,
-    discount: 100,
-    rating: 4.2,
-    image: img6,
-    category: "Wearables",
-    brand: "FitLife",
-    tags: ["health"],
-    isNew: false,
-    isOnSale: false,
-  },
-  {
-    id: 7,
-    name: "USB-C Charger",
-    price: 300,
-    discount: 0,
-    rating: 3.9,
-    image: img7,
-    category: "Accessories",
-    brand: "ChargeIt",
-    tags: ["power"],
-    isNew: true,
-    isOnSale: false,
-  },
-  {
-    id: 8,
-    name: "Noise Cancelling Headphones",
-    price: 3200,
-    discount: 500,
-    rating: 4.8,
-    image: img8,
-    category: "Electronics",
-    brand: "QuietSound",
-    tags: ["audio"],
-    isNew: false,
-    isOnSale: true,
-  },
-  {
-    id: 9,
-    name: "Portable SSD 1TB",
-    price: 2800,
-    discount: 400,
-    rating: 4.6,
-    image: img9,
-    category: "Electronics",
-    brand: "DataPro",
-    tags: ["storage", "portable"],
-    isNew: true,
-    isOnSale: true,
-  },
-  {
-    id: 10,
-    name: "Mechanical Keyboard",
-    price: 1500,
-    discount: 200,
-    rating: 4.7,
-    image: img10,
-    category: "Electronics",
-    brand: "KeyMaster",
-    tags: ["gaming"],
-    isNew: false,
-    isOnSale: true,
-  },
-  {
-    id: 11,
-    name: "USB Hub 7-Port",
-    price: 450,
-    discount: 50,
-    rating: 4.2,
-    image: img11,
-    category: "Accessories",
-    brand: "ConnectionCo",
-    tags: ["connectivity"],
-    isNew: true,
-    isOnSale: false,
-  },
-  {
-    id: 12,
-    name: "Wireless Mouse",
-    price: 890,
-    discount: 100,
-    rating: 4.4,
-    image: img12,
-    category: "Electronics",
-    brand: "ProPoint",
-    tags: ["accessories"],
-    isNew: false,
-    isOnSale: false,
-  },
-  {
-    id: 13,
-    name: "Phone Stand",
-    price: 350,
-    discount: 0,
-    rating: 4.1,
-    image: "https://images.unsplash.com/photo-1707651385176-8c7492596164?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8UGhvbmUlMjBTdGFuZHxlbnwwfHwwfHx8MA%3D%3D",
-    category: "Accessories",
-    brand: "StandPro",
-    tags: ["mobile"],
-    isNew: true,
-    isOnSale: false,
-  },
-  {
-    id: 14,
-    name: "Screen Protector Set",
-    price: 199,
-    discount: 25,
-    rating: 4.0,
-    image: "https://plus.unsplash.com/premium_photo-1726687330996-72c50adc6017?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8U2NyZWVuJTIwUHJvdGVjdG9yfGVufDB8fDB8fHww",
-    category: "Accessories",
-    brand: "ScreenGuard",
-    tags: ["protection"],
-    isNew: false,
-    isOnSale: true,
-  },
-  {
-    id: 15,
-    name: "Cable Organizer Kit",
-    price: 299,
-    discount: 0,
-    rating: 4.3,
-    image: "https://images.unsplash.com/photo-1619249722898-492c571615fe?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Q2FibGUlMjBPcmdhbml6ZXIlMjBLaXR8ZW58MHx8MHx8fDA%3D",
-    category: "Accessories",
-    brand: "TidyTech",
-    tags: ["organization"],
-    isNew: true,
-    isOnSale: false,
-  },
-];
-
 export default function ShopPage() {
   // grab methods/state from the shared cart context; this is the
   // same context that Cart.jsx reads later on.  When we call addToCart()
@@ -225,7 +12,10 @@ export default function ShopPage() {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  // main categories & subcategories state
+  const [selectedMainCategories, setSelectedMainCategories] = useState([]);
+  const [selectedSubcategories, setSelectedSubcategories] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [priceRange, setPriceRange] = useState([0, 5000]);
   const [minPrice, maxPrice] = priceRange;
@@ -236,7 +26,30 @@ export default function ShopPage() {
 
   const itemsPerPage = 6;
 
-  const categories = [...new Set(productsData.map((p) => p.category))];
+  // derive unique lists/maps for filters
+  const categoriesMap = useMemo(() => {
+    const map = {};
+    productsData.forEach((p) => {
+      if (!map[p.category]) map[p.category] = new Set();
+      if (p.subcategory) map[p.category].add(p.subcategory);
+    });
+    return map; // { category: Set(subcats) }
+  }, []);
+
+  // build tags map: { "Category::Subcategory": Set of tags }
+  const tagsMap = useMemo(() => {
+    const map = {};
+    productsData.forEach((p) => {
+      const key = `${p.category}::${p.subcategory || "General"}`;
+      if (!map[key]) map[key] = new Set();
+      if (p.tags && Array.isArray(p.tags)) {
+        p.tags.forEach((tag) => map[key].add(tag));
+      }
+    });
+    return map;
+  }, []);
+
+  const categories = Object.keys(categoriesMap);
   const brands = [...new Set(productsData.map((p) => p.brand))];
 
   const filtered = useMemo(() => {
@@ -244,14 +57,26 @@ export default function ShopPage() {
       .filter((p) =>
         p.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
-      .filter((p) =>
-        selectedCategories.length ? selectedCategories.includes(p.category) : true
-      )
+      .filter((p) => {
+        // no selection -> pass
+        if (!selectedMainCategories.length && !selectedSubcategories.length) return true;
+        // main category match
+        if (selectedMainCategories.includes(p.category)) return true;
+        // subcategory match
+        if (p.subcategory && selectedSubcategories.includes(p.subcategory)) return true;
+        return false;
+      })
       .filter((p) =>
         selectedBrands.length ? selectedBrands.includes(p.brand) : true
       )
       .filter((p) => p.price >= minPrice && p.price <= maxPrice)
       .filter((p) => (ratingFilter ? p.rating >= ratingFilter : true))
+      .filter((p) => {
+        // tag filtering: if tags are selected, product must have at least one matching tag
+        if (!selectedTags.length) return true;
+        if (!p.tags) return false;
+        return selectedTags.some((tag) => p.tags.includes(tag));
+      })
       .sort((a, b) => {
         if (sortOption === "low-high") return a.price - b.price;
         if (sortOption === "high-low") return b.price - a.price;
@@ -260,7 +85,9 @@ export default function ShopPage() {
       });
   }, [
     searchTerm,
-    selectedCategories,
+    selectedMainCategories,
+    selectedSubcategories,
+    selectedTags,
     selectedBrands,
     minPrice,
     maxPrice,
@@ -274,15 +101,27 @@ export default function ShopPage() {
     currentPage * itemsPerPage
   );
 
-  const toggleCategory = (cat) => {
-    setSelectedCategories((prev) =>
+  const toggleMainCategory = (cat) => {
+    setSelectedMainCategories((prev) =>
       prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]
+    );
+  };
+
+  const toggleSubcategory = (sub) => {
+    setSelectedSubcategories((prev) =>
+      prev.includes(sub) ? prev.filter((s) => s !== sub) : [...prev, sub]
     );
   };
 
   const toggleBrand = (brand) => {
     setSelectedBrands((prev) =>
       prev.includes(brand) ? prev.filter((b) => b !== brand) : [...prev, brand]
+    );
+  };
+
+  const toggleTag = (tag) => {
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     );
   };
 
@@ -327,21 +166,61 @@ export default function ShopPage() {
         <div className="bg-white p-6 rounded shadow">
           <h3 className="font-bold mb-4">Filters</h3>
           <div className="mb-4">
-            <p className="font-semibold">Category</p>
+            <p className="font-semibold  bg-sky-500 text-white px-2 py-1 rounded">Category</p>
             {categories.map((cat) => (
-              <label key={cat} className="block text-sm">
-                <input
-                  type="checkbox"
-                  checked={selectedCategories.includes(cat)}
-                  onChange={() => toggleCategory(cat)}
-                  className="mr-2"
-                />
-                {cat}
-              </label>
+              <div key={cat} className="mb-2">
+                <label className="block text-sm font-medium text-green-700">
+                  <input
+                    type="checkbox"
+                    checked={selectedMainCategories.includes(cat)}
+                    onChange={() => toggleMainCategory(cat)}
+                    className="mr-2"
+                  />
+                  {cat}
+                </label>
+                {/* render subcategories if present */}
+                {categoriesMap[cat] && categoriesMap[cat].size > 0 && (
+                  <div className="ml-4 mt-1 ">
+                    {[...categoriesMap[cat]].map((sub) => {
+                      const tagsKey = `${cat}::${sub}`;
+                      const subTags = tagsMap[tagsKey];
+                      return (
+                        <div key={sub} className="mb-1">
+                          <label className="block text-sm   text-pink-800 px-2 py-1 rounded">
+                            <input
+                              type="checkbox"
+                              checked={selectedSubcategories.includes(sub)}
+                              onChange={() => toggleSubcategory(sub)}
+                              className="mr-2"
+                            />
+                            {sub}
+                          </label>
+                          {/* render tags if present */}
+                          {subTags && subTags.size > 0 && (
+                            <div className="ml-4 mt-1  ">
+                              {[...subTags].map((tag) => (
+                                <label key={tag} className="block text-xs ">
+                                  <input
+                                    type="checkbox"
+                                    checked={selectedTags.includes(tag)}
+                                    onChange={() => toggleTag(tag)}
+                                    className=" mr-2 "
+                                  />
+                                  {tag}
+                                </label>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             ))}
           </div>
           <div className="mb-4">
-            <p className="font-semibold">Brand</p>
+            <p className="font-semibold bg-sky-500 text-white px-2 py-1 rounded">Brand</p>
             {brands.map((b) => (
               <label key={b} className="block text-sm">
                 <input
@@ -406,7 +285,9 @@ export default function ShopPage() {
             <button
               className="text-blue-600 text-sm hover:underline"
               onClick={() => {
-                setSelectedCategories([]);
+                setSelectedMainCategories([]);
+                setSelectedSubcategories([]);
+                setSelectedTags([]);
                 setSelectedBrands([]);
                 setPriceRange([0, 5000]);
                 setRatingFilter(0);
